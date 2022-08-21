@@ -1,16 +1,28 @@
 import javax.swing.*;
+import java.security.NoSuchAlgorithmException;
 
 public class FrmMain extends JDialog {
-    private JButton btnAESGCM;
-    private JButton btnRSA;
-    private JButton btnExit;
-    private JPanel mainPanel;
 
     FrmMain(){
         setTitle("Encryption");
-        setSize(300, 200);
+        setSize(200, 200);
         setLocationRelativeTo(null);
-        setContentPane(mainPanel);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setLayout(null);
+
+        JButton btnAESGCM = new JButton("AES GCM");
+        btnAESGCM.setBounds(20, 20, 150, 30);
+        add(btnAESGCM);
+
+        JButton btnRSA = new JButton("RSA");
+        btnRSA.setBounds(20, 60, 150, 30);
+        add(btnRSA);
+
+        JButton btnExit = new JButton("Exit");
+        btnExit.setBounds(20, 100, 150, 30);
+        add(btnExit);
+
         btnExit.addActionListener(e -> {
             System.exit(0);
             setVisible(false);
@@ -20,7 +32,11 @@ public class FrmMain extends JDialog {
             setVisible(false);
         });
         btnRSA.addActionListener(e -> {
-            new FrmRSA().setVisible(true);
+            try {
+                new FrmRSA().setVisible(true);
+            } catch (NoSuchAlgorithmException ex) {
+                throw new RuntimeException(ex);
+            }
             setVisible(false);
         });
     }

@@ -1,56 +1,45 @@
-
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import java.security.*;
 import java.util.Base64;
 
 public class RSAEncryption {
-    public static void main(String[] args) throws NoSuchAlgorithmException,
-            NoSuchPaddingException, InvalidKeyException,
-            IllegalBlockSizeException, BadPaddingException {
+    String publicKeyString, privateKeyString;
+    static PublicKey publicKey;
+    static PrivateKey privateKey;
+
+    RSAEncryption() throws NoSuchAlgorithmException {
         KeyPairGenerator keyPairGenerator =
                 KeyPairGenerator.getInstance("RSA");
         SecureRandom secureRandom = new SecureRandom();
-
         keyPairGenerator.initialize(2048, secureRandom);
-
-
         KeyPair pair = keyPairGenerator.generateKeyPair();
-
-        PublicKey publicKey = pair.getPublic();
-
-        String publicKeyString =
+        publicKey = pair.getPublic();
+        publicKeyString =
                 Base64.getEncoder().encodeToString(publicKey.getEncoded());
-
-        System.out.println("public key = " + publicKeyString);
-
-        PrivateKey privateKey = pair.getPrivate();
-
-        String privateKeyString =
+//        System.out.println("public key = " + publicKeyString);
+        privateKey = pair.getPrivate();
+        privateKeyString =
                 Base64.getEncoder().encodeToString(privateKey.getEncoded());
+//        System.out.println("private key = " + privateKeyString);
+    }
 
-        System.out.println("private key = " + privateKeyString);
-
-        //Encrypt Hello world message
+    public String encrypt(String message) throws Exception {
+        //Encrypt message
         Cipher encryptionCipher = Cipher.getInstance("RSA");
         encryptionCipher.init(Cipher.ENCRYPT_MODE, publicKey);
-        String message = "Hello world";
         byte[] encryptedMessage =
                 encryptionCipher.doFinal(message.getBytes());
-        String encryption =
-                Base64.getEncoder().encodeToString(encryptedMessage);
-        System.out.println("encrypted message = " + encryption);
+        //        System.out.println("encrypted message = " + encryption);
+        return Base64.getEncoder().encodeToString(encryptedMessage);
+    }
 
-        // encrypt with public key and decrypt with private key
-
-        //Decrypt Hello world message
+    public String decrypt(String encryptedMessage) throws Exception {
+        //Decrypt message
         Cipher decryptionCipher = Cipher.getInstance("RSA");
         decryptionCipher.init(Cipher.DECRYPT_MODE, privateKey);
         byte[] decryptedMessage =
-                decryptionCipher.doFinal(encryptedMessage);
-        String decryption = new String(decryptedMessage);
-        System.out.println("decrypted message = " + decryption);
+                decryptionCipher.doFinal(Base64.getDecoder().decode(encryptedMessage));
+        //        System.out.println("decrypted message = " + decryption);
+        return new String(decryptedMessage);
     }
 }

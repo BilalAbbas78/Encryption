@@ -6,7 +6,7 @@ public class FrmAESGCM extends JDialog {
         setSize(400, 450);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//        setResizable(false);
+        setResizable(false);
         setLayout(null);
 
         JLabel lblHeading = new JLabel("AES GCM Encryption and Decryption");
