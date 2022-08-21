@@ -100,8 +100,4 @@ public class FrmAESGCM extends JDialog {
         });
 
     }
-
-    public static void main(String[] args) {
-        new FrmAESGCM().setVisible(true);
-    }
 }

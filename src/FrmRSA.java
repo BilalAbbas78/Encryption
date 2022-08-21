@@ -106,8 +106,4 @@ public class FrmRSA extends JDialog {
             dispose();
         });
     }
-
-        public static void main(String[] args) throws NoSuchAlgorithmException {
-            new FrmRSA().setVisible(true);
-        }
     }

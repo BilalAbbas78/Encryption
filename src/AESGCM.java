@@ -8,11 +8,6 @@ public class AESGCM {
     private static SecretKey key;
     private static Cipher encryptionCipher;
 
-    public void init() {
-//        byte[] decodedKey = Base64.getDecoder().decode("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-//        key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
-    }
-
     public static String encrypt(String message) throws Exception {
         byte[] decodedKey = Base64.getDecoder().decode("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
@@ -41,19 +36,5 @@ public class AESGCM {
 
     private static byte[] decode(String data) {
         return Base64.getDecoder().decode(data);
-    }
-
-    public static void main(String[] args) {
-        try {
-            AESGCM AESGCM = new AESGCM();
-            AESGCM.init();
-            String encryptedMessage = AESGCM.encrypt("ABC");
-            String decryptedMessage = AESGCM.decrypt(encryptedMessage);
-
-            System.out.println("Encrypted Message : " + encryptedMessage);
-            System.out.println("Decrypted Message : " + decryptedMessage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
