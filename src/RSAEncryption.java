@@ -1,4 +1,8 @@
 import javax.crypto.Cipher;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.security.*;
 import java.util.Base64;
 
@@ -21,6 +25,42 @@ public class RSAEncryption {
         privateKeyString =
                 Base64.getEncoder().encodeToString(privateKey.getEncoded());
 //        System.out.println("private key = " + privateKeyString);
+        writeToFile("publicKey.txt", publicKeyString);
+        writeToFile("privateKey.txt", privateKeyString);
+        System.out.println("Success");
+        readFromFile("publicKey.txt");
+        readFromFile("privateKey.txt");
+    }
+
+    private void writeToFile(String fileName, String content) {
+        try {
+            FileWriter fileWriter = new FileWriter("C:/Users/Syed Bilal Abbas/Desktop/Keys/" + fileName);
+            fileWriter.write(content);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readFromFile(String fileName) {
+        try {
+            FileReader fileReader = new FileReader("C:/Users/Syed Bilal Abbas/Desktop/Keys/" + fileName);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            if ((line = bufferedReader.readLine()) != null) {
+//                System.out.println(line);
+                if (fileName.equals("publicKey.txt")) {
+                    publicKeyString = line;
+                    System.out.println("public key = " + publicKeyString);
+                } else {
+                    privateKeyString = line;
+                    System.out.println("private key = " + privateKeyString);
+                }
+            }
+            fileReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String encrypt(String message) throws Exception {

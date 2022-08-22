@@ -9,7 +9,7 @@ public class AESGCM {
     private static Cipher encryptionCipher;
 
     public static String encrypt(String message) throws Exception {
-        byte[] decodedKey = Base64.getDecoder().decode("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        byte[] decodedKey = new byte[16];
         key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
         byte[] messageInBytes = message.getBytes();
         encryptionCipher = Cipher.getInstance("AES/GCM/NoPadding");
@@ -19,7 +19,7 @@ public class AESGCM {
     }
 
     public static String decrypt(String encryptedMessage) throws Exception {
-        byte[] decodedKey = Base64.getDecoder().decode("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        byte[] decodedKey = new byte[16];
         key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
         byte[] messageInBytes = decode(encryptedMessage);
         Cipher decryptionCipher = Cipher.getInstance("AES/GCM/NoPadding");
