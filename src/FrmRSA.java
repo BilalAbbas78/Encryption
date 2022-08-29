@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 public class FrmRSA extends JDialog {
-    FrmRSA() throws NoSuchAlgorithmException {
+    FrmRSA() throws NoSuchAlgorithmException, InvalidKeySpecException {
         setTitle("RSA");
         setSize(400, 500);
         setLocationRelativeTo(null);
@@ -63,8 +64,12 @@ public class FrmRSA extends JDialog {
         spTxtDecrypted.setBounds(200, 240, 150, 150);
         add(spTxtDecrypted);
 
+        JButton btnGenerateKeys = new JButton("Generate Keys");
+        btnGenerateKeys.setBounds(20, 400, 150, 30);
+        add(btnGenerateKeys);
+
         JButton btnBack = new JButton("Back");
-        btnBack.setBounds(130, 410, 100, 30);
+        btnBack.setBounds(225, 400, 100, 30);
         add(btnBack);
 
         RSAEncryption rsa = new RSAEncryption();
@@ -105,5 +110,19 @@ public class FrmRSA extends JDialog {
             new FrmMain().setVisible(true);
             dispose();
         });
+
+        btnGenerateKeys.addActionListener(e -> {
+            try {
+                RSAEncryption.generateKeys();
+                JOptionPane.showMessageDialog(null, "Keys pair generated successfully");
+            } catch (NoSuchAlgorithmException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
     }
+
+    public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        new FrmRSA().setVisible(true);
     }
+}

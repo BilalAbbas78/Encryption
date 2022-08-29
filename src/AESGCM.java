@@ -1,16 +1,17 @@
 import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 
 public class AESGCM {
-    private static SecretKey key;
+    public static SecretKey key;
     private static Cipher encryptionCipher;
 
     public static String encrypt(String message) throws Exception {
-        byte[] decodedKey = new byte[16];
-        key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        keyGen.init(128);
+        key = keyGen.generateKey();
         byte[] messageInBytes = message.getBytes();
         encryptionCipher = Cipher.getInstance("AES/GCM/NoPadding");
         encryptionCipher.init(Cipher.ENCRYPT_MODE, key);
@@ -19,8 +20,6 @@ public class AESGCM {
     }
 
     public static String decrypt(String encryptedMessage) throws Exception {
-        byte[] decodedKey = new byte[16];
-        key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
         byte[] messageInBytes = decode(encryptedMessage);
         Cipher decryptionCipher = Cipher.getInstance("AES/GCM/NoPadding");
         int t_LEN = 128;

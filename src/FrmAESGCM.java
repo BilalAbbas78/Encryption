@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.util.Base64;
 
 public class FrmAESGCM extends JDialog {
     FrmAESGCM(){
@@ -73,6 +74,7 @@ public class FrmAESGCM extends JDialog {
             String encrypted = null;
             try {
                 encrypted = AESGCM.encrypt(text);
+                txtDecrypted.setText(Base64.getEncoder().encodeToString(AESGCM.key.getEncoded()));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }

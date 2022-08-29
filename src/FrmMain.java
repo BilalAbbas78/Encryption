@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 public class FrmMain extends JDialog {
 
@@ -34,7 +35,7 @@ public class FrmMain extends JDialog {
         btnRSA.addActionListener(e -> {
             try {
                 new FrmRSA().setVisible(true);
-            } catch (NoSuchAlgorithmException ex) {
+            } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
                 throw new RuntimeException(ex);
             }
             setVisible(false);
